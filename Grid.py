@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import randint
 
 directionVectors = (UP_VEC, DOWN_VEC, LEFT_VEC, RIGHT_VEC) = ((-1, 0), (1, 0), (0, -1), (0, 1))
 vecIndex = [UP, DOWN, LEFT, RIGHT] = range(4)

@@ -1,13 +1,18 @@
 from Grid import Grid
 from util import *
 from random import randint, shuffle
-import time
 
 class Agent:
     def getMove(self, grid: Grid):
         pass
 
 class randomAgent(Agent):
+    '''
+    Just random
+    '''
+    def __str__(self):
+        return 'This\'s a random agent'
+
     def getMove(self, grid: Grid):
         #time.sleep(0.1)
         moves = grid.getAvailableMoves()
@@ -15,8 +20,14 @@ class randomAgent(Agent):
 
 
 class greedyAgent(Agent):
-    def getScore(self, grid, move):
+    '''
+    A greedy agent:
+    always return the move whose resulting grids has the least (average) number of numbered tiles.
+    '''
+    def __str__(self):
+        return 'This\'s a greedy agent'
 
+    def getScore(self, grid, move):
         score = 0
         rets = getAllPossibleGrid(grid, move)
         for ret in rets:
