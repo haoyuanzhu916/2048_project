@@ -155,10 +155,13 @@ class Grid:
             return None
 
     def isWin(self):
-        return self.getMaxTile() == 1024
+        return self.getMaxTile() == 2048
 
     def isLose(self):
         return not self.canMove()
+
+    def isTerminal(self):
+        return self.isWin() or self.isLose()
 
 
 if __name__ == '__main__':

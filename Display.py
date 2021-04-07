@@ -1,5 +1,6 @@
 import platform
 import os
+from abc import ABC, abstractmethod
 
 colorMap = {
     0 	  : 97 ,
@@ -24,7 +25,8 @@ colorMap = {
 cTemp = "\x1b[%dm%7s\x1b[0m "
 
 
-class Display:
+class Display(ABC):
+    @abstractmethod
     def display(self,grid):
         pass
 

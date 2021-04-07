@@ -1,10 +1,10 @@
 from Grid import Grid
 from random import randint
-from Agent import Agent,randomAgent,greedyAgent
-
+from Agent import *
 from Display import Display, BeatifulDisplay
-
 from time import sleep
+
+from MCTSAgent import MCTSAgent
 
 defaultInitialTiles = 2
 defaultProbability = 0.9
@@ -23,7 +23,7 @@ class Game:
         self.possibleNewTiles = [2]
         self.probability = defaultProbability
         self.initTiles = defaultInitialTiles
-        self.agent = greedyAgent()
+        self.agent = GreedyAgent()
         self.displayer = BeatifulDisplay()
         self.displayStep = defaultDisplayStep
         self._debugFlag = False
@@ -109,7 +109,8 @@ class Game:
 
 if __name__ == '__main__':
     game = Game()
-    game.setDisplay(BeatifulDisplay(), 20)
+    game.setAgent(MCTSAgent())
+    game.setDisplay(BeatifulDisplay(), 100)
     game.main()
 
 

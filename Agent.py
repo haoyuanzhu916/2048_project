@@ -1,17 +1,22 @@
 from Grid import Grid
 from util import *
 from random import randint, shuffle
+from abc import ABC, abstractmethod
 
-class Agent:
+
+class Agent(ABC):
+
+    @abstractmethod
     def getMove(self, grid: Grid):
         pass
 
-class randomAgent(Agent):
-    '''
+
+class RandomAgent(Agent):
+    """
     Just random
-    '''
+    """
     def __str__(self):
-        return 'This\'s a random agent'
+        return 'Random Agent'
 
     def getMove(self, grid: Grid):
         #time.sleep(0.1)
@@ -19,17 +24,17 @@ class randomAgent(Agent):
         return moves[randint(0,len(moves)-1)]
 
 
-class greedyAgent(Agent):
-    '''
+class GreedyAgent(Agent):
+    """
     A greedy agent:
     always return the move whose resulting grids has the least (average) number of numbered tiles.
-    '''
+    """
     def __str__(self):
-        return 'This\'s a greedy agent'
+        return 'Greedy Agent'
 
     def getScore(self, grid, move):
         score = 0
-        rets = getAllPossibleGrid(grid, move)
+        rets = getKNewGrid(grid, move, 4)
         for ret in rets:
             if ret.isLose():
                 score -= 100
