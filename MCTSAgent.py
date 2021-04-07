@@ -130,6 +130,9 @@ class MCTSAgent(Agent):
         assert verbose in [0,1]
         self.verbose = int(verbose)
 
+    def __str__(self):
+        return 'MCTS 2048 Agent (done by Guangyi)'
+
 
     def getMove(self, grid: Grid):
         self.root = MCTSNode(parent=None, state=grid)
@@ -182,6 +185,8 @@ class MCTSAgent(Agent):
             move = choice(moves)
             grid = getANewGrid(grid, move)
             depth += 1
+        if self.verbose:
+            print('rolling Out Depth {}'.format(depth+1))
         reward = estimate(grid)
         return reward
 

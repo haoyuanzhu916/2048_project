@@ -54,6 +54,7 @@ class AgentTest:
 
 
 if __name__ == '__main__':
-    test = AgentTest(testAgent=MCTSAgent(),testTurns=10,verbose=500)
+    test = AgentTest(testAgent=MCTSAgent(simulateIter=50, explorationParameter=10)
+                     , testTurns=50)
 
     test.main()

@@ -2,6 +2,9 @@ from typing import List
 
 from Grid import Grid
 from random import randint, choices
+from math import sqrt,log2
+
+directionVectors = (UP_VEC, DOWN_VEC, LEFT_VEC, RIGHT_VEC) = ((-1, 0), (1, 0), (0, -1), (0, 1))
 
 
 def getANewGrid(grid: Grid, dir) -> Grid:
@@ -57,7 +60,8 @@ def estimate(grid: Grid):
     :return:
     :rtype:
     '''
-    return freeCellsHeuristic(grid)
+    #return freeCellsHeuristic(grid)
+    return edgeHeuristic(grid) + freeCellsHeuristic(grid) + smoothnessHeuristic(grid)
 
 def freeCellsHeuristic(grid : Grid):
     '''
@@ -66,3 +70,34 @@ def freeCellsHeuristic(grid : Grid):
     :rtype: int
     '''
     return len(grid.getAvailableCells())
+
+def smoothnessHeuristic(grid:Grid):
+    size = grid.size
+    value = 0
+    for i in range(size):
+        for j in range(size):
+            cellValue = float('inf')
+            if i > 0: cellValue = min(cellValue, abs(grid.mat[i][j] - grid.mat[i - 1][j]))
+            if i < size - 1: cellValue = min(cellValue, abs(grid.mat[i][j] - grid.mat[i + 1][j]))
+            if j > 0: cellValue = min(cellValue, abs(grid.mat[i][j] - grid.mat[i][j -1]))
+            if j < size - 1: cellValue = min(cellValue, abs(grid.mat[i][j] - grid.mat[i][j+1]))
+            if 4096 > cellValue > 0:
+                value += log2(cellValue)
+    return -(value)
+
+def edgeHeuristic(grid:Grid):
+    '''
+    We like big tiles on the edge
+    '''
+    size = grid.size
+    value = 0
+    for i in range(size):
+        for j in range(size):
+            if (i == 0 or i == size) and (j == 0 or j == size-1):
+                cellValue = 2 * log2(max(1, grid.mat[i][j]))
+            elif i == 0 or i == size-1 or j == 0 or j == size-1:
+                cellValue = log2(max(1,grid.mat[i][j]))
+            else:
+                cellValue = -log2(max(1, grid.mat[i][j]))
+            value += cellValue
+    return value
