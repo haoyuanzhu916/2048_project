@@ -29,6 +29,10 @@ class GreedyAgent(Agent):
     A greedy agent:
     always return the move whose resulting grids has the least (average) number of numbered tiles.
     """
+
+    def __init__(self, policy = freeCellsHeuristic):
+        self.policy = policy
+
     def __str__(self):
         return 'Greedy Agent'
 
@@ -42,7 +46,7 @@ class GreedyAgent(Agent):
             if ret.isWin():
                 score += 1000
                 continue
-            score += len(ret.getAvailableCells())
+            score += self.policy(ret)
         return score / len(rets)
 
     def getMove(self, grid: Grid):

@@ -109,8 +109,8 @@ class Game:
 
 if __name__ == '__main__':
     game = Game()
-    game.setAgent(MCTSAgent())
-    game.setDisplay(BeatifulDisplay(), 1000)
+    game.setAgent(MCTSAgent(simulateIter=50))
+    game.setDisplay(BeatifulDisplay(), 100)
     game.main()
 
 

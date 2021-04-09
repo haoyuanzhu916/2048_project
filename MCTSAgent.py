@@ -1,4 +1,4 @@
-from Agent import Agent
+from Agent import *
 from Grid import Grid
 from util import *
 from random import choice,shuffle
@@ -180,16 +180,32 @@ class MCTSAgent(Agent):
     def rollingOut(self, node: MCTSNode):
         grid = node.state
         depth = 0
+        rollingOut = GreedyAgent(estimate)
         while not grid.isTerminal() and depth < self.rollingOutDepth:
             moves = grid.getAvailableMoves()
-            move = choice(moves)
+            move = rollingOut.getMove(grid)
             grid = getANewGrid(grid, move)
             depth += 1
         if self.verbose:
             print('rolling Out Depth {}'.format(depth+1))
+            print(grid.mat)
         reward = estimate(grid)
         return reward
 
+
+def estimate(grid: Grid):
+    '''
+    :param grid:
+    :type grid:
+    :return:
+    :rtype:
+    '''
+    # return freeCellsHeuristic(grid)
+    if grid.isWin():
+        return 1000
+    if grid.isLose():
+        return -1000
+    return (maxValueHeuristic(grid) + freeCellsHeuristic(grid) + monotonicityHeuristic(grid) // 2)
 
 
 
@@ -201,7 +217,7 @@ if __name__ == '__main__':
     #dis = BeatifulDisplay()
     #dis.display(g)
 
-    agent = MCTSAgent(simulateIter=3 ,verbose=1)
+    agent = MCTSAgent(simulateIter=3,verbose=1)
     move = agent.getMove(g)
     print(move)
     _ = input()
