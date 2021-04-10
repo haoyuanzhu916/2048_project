@@ -87,7 +87,7 @@ class Game:
 
             self.insertRandonTile()
             if self.displayStep > 0 and step % self.displayStep == 0:
-                sleep(0.1)
+                #sleep(0.1)
                 print('step: ',step)
                 self.display()
             #print(self.getScore())
@@ -109,8 +109,8 @@ class Game:
 
 if __name__ == '__main__':
     game = Game()
-    game.setAgent(MCTSAgent(simulateIter=100, rollingOutDepth=8))
-    game.setDisplay(BeatifulDisplay(), 50)
+    game.setAgent(MCTSAgent(simulateIter=100, rollingOutDepth=4))
+    game.setDisplay(BeatifulDisplay(), 100)
     game.main()
 
 

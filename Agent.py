@@ -38,16 +38,16 @@ class GreedyAgent(Agent):
 
     def getScore(self, grid, move):
         score = 0
-        rets = getAllPossibleGrid(grid, move)
+        ret = grid.clone()
+        ret.move(move)
+        '''
         for ret in rets:
-            if ret.isLose():
-                score -= 100
-                continue
-            if ret.isWin():
-                score += 1000
-                continue
             score += self.policy(ret)
         return score / len(rets)
+        '''
+        return self.policy(ret)
+
+
 
     def getMove(self, grid: Grid):
         #time.sleep(0.1)
