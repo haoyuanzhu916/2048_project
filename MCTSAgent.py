@@ -187,7 +187,7 @@ class MCTSAgent(Agent):
             grid = getANewGrid(grid, move)
             depth += 1
         if self.verbose:
-            print('rolling Out Depth {}'.format(depth+1))
+            print('rolling Out Depth {}'.format(depth))
             print(grid.mat)
         reward = estimate(grid)
         return reward
@@ -211,16 +211,13 @@ def estimate(grid: Grid):
 
 if __name__ == '__main__':
     g = Grid()
-    g.mat[0][0] = 2
-    g.mat[1][0] = 2
-    g.mat[3][0] = 4
+    g.mat = [[2,0,4,4],[0,2,4,4],[4,8,32,256],[16,128,512,1024]]
     #dis = BeatifulDisplay()
     #dis.display(g)
 
-    agent = MCTSAgent(simulateIter=3,verbose=1)
+    agent = MCTSAgent(simulateIter=100 ,rollingOutDepth=10,verbose=1)
     move = agent.getMove(g)
     print(move)
-    _ = input()
 
 
 
